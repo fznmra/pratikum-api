@@ -2,68 +2,72 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Fakultas;
+use App\Models\Prodi;
 use Illuminate\Http\Request;
-use App\Models\Mahasiswa;
 
 class DashboardController extends Controller
 {
-    // Halaman utama (daftar mahasiswa)
-    public function index()
-    {
-        $mahasiswa = Mahasiswa::all();
-        return view('mahasiswa.index', compact('mahasiswa'));
-    }
+   
+   public function index(){
 
-    // Halaman form tambah
+    $fakultas = Fakultas::all();
+    $prodi = Prodi::all();
+    return view('welcome', compact('fakultas','prodi'));
+
+   }
+
+
+
+
+
+
+
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        return view('mahasiswa.create');
+        //
     }
 
-    // Simpan data baru
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $request->validate([
-            'nim' => 'required|unique:mahasiswa,nim',
-            'nama' => 'required',
-        ]);
-
-        Mahasiswa::create([
-            'nim' => $request->nim,
-            'nama' => $request->nama,
-        ]);
-
-        return redirect()->route('dashboard')->with('success', 'Mahasiswa berhasil ditambahkan!');
+        //
     }
 
-    // Halaman form edit
-    public function edit($id)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        $mahasiswa = Mahasiswa::findOrFail($id);
-        return view('mahasiswa.edit', compact('mahasiswa'));
+        //
     }
 
-    // Update data
-    public function update(Request $request, $id)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
-        $request->validate([
-            'nim' => 'required',
-            'nama' => 'required',
-        ]);
-
-        $mahasiswa = Mahasiswa::findOrFail($id);
-        $mahasiswa->update([
-            'nim' => $request->nim,
-            'nama' => $request->nama,
-        ]);
-
-        return redirect()->route('dashboard')->with('success', 'Data mahasiswa berhasil diperbarui!');
+        //
     }
 
-    // Hapus data
-    public function destroy($id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
-        Mahasiswa::findOrFail($id)->delete();
-        return redirect()->route('dashboard')->with('success', 'Data mahasiswa berhasil dihapus!');
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }
